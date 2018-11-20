@@ -1,48 +1,45 @@
-
-from numbers import Number
+from numbers import *
 from vector import *
-#1st task 
-def gcd(self, other):
-	if self == 0 & other == 0:
-		raise ArithmeticError( "gcd(0,0) does not exist" )
-    sn = self.n*other.d
-    on = other.n * self.d
-    d  = self.d  * other.d
-    return (sn, on, d)
-#2nd task
-class Rational( Number ) :
-	def __init__( self, num, denum = 1 ) :
-		self. num = num
-		self. denum = denum
-		self. normalize( )
-
+#task #1
+def gcd(a, b):
+	if b == 0:
+		return a
+	else:
+		return gcd(b, a % b)
+#print(gcd(-4,12))
+#task #2
+class Rational(Number):
+	def __init__(self, num, denum = 1):
+		self.num = num
+		self.denum = denum
+		self.normalize()
 	def normalize():
 		if denum == 0:
-			print("Can't divide by zero!")
-		else if num == 0:
-			num = 0
+			raise ArithmeticError( "Can not divide by 0!" )
+		if num == 0:
 			denum = 1
-		else if num < 0 & denum > 0:
-			num = num//gcd(num,denum)
-			denum = denum//gcd(num,denum)
-		else
-			num = abs(num)//gcd(num,denum)
-			denum = abs(denum)//gcd(num,denum)
+		if denum < 0:
+			__neg__(self)
+			num = num//gcd(num, denum)
+			denum = denum//gcd(num, denum)
+		else:
+			num = num//gcd(num, denum)
+			denum = denum//gcd(num, denum)
 		print(num + "/" + denum)
-	#3rd task
+	#task #3
 	def __repr__(self):
-    	return '%s(%d, %d)' % (self.__class__.__name__, self.n, self.d)
-    #4th task
-	def __neg__( self ) :
-		r = self.__class__(-self.n, self.d)
-    	return r
+		return '%s( %d, %d)' % (self.__class__.__name__, self.n, self.d)
+	#task #4
+	def __neg__(self):
+		r = self.__class__(-self.n, self.denum)
+		return r
 	def __add__(self, other):
-    	s, o, d = self.gcd(other)
-    	r = self.__class__(s + o, d)
-    	return r
+		s, o, d = self.gcd(other)
+		r = self.__class__(s + o, d)
+		return r
 	def __sub__( self, other ) :
 		s, o, d = self.gcd(other)
-		r = self.__class__(s - 0, d)
+		r = self.__class__(s - o, d)
 		return r
 	def __radd_( self, other ) :
 		s, o, d = self.gcd(other)
